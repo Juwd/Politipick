@@ -1,21 +1,20 @@
 <template>
 <div class="container">
-  <h1> Latest Posts </h1>
   <!-- create posts here -->
-  <div class="create-post">
+   <!-- <div class="create-post">
       <label for="create-post">Input text here </label>
       <input type="text" id="create-post" v-model="text" placedholder="input text here ok?">
-      <button v-on:click="createPost">Post!</button>
-  </div>
-  <p class="error" v-if="error"> {{error }} </p>
-  <div class="posts-container">
-    <div class="post" v-for="(post,index) in posts" v-bind:item="post" v-bind:index="index" v-bind:key="post._id" v-on:dblclick="deletePost(post._id)">
+      <v-btn depressed v-on:click="createPost">Post!</v-btn>
+  </div>  -->
+  <p v-if="error"> {{error }} </p>
+  <div>
+    <div v-for="(post,index) in posts" v-bind:item="post" v-bind:index="index" v-bind:key="post._id" v-on:dblclick="deletePost(post._id)" >
         {{ `${post.createdAt.getDate()}/${post.createdAt.getMonth()}/ ${post.createdAt.getFullYear()}`}}
-        <p class="text"> {{post.title}} </p>
+        <router-link :to="{name: 'Politician', params: {title: post.title } }"><p class="text"> {{post.title}} </p></router-link>
+<!-- :to="{name: 'Politician', params: post.id}" -->
     </div>
   </div>
-
-
+  <router-view :key="$router.path"/>
 </div>
 </template>
 
@@ -56,39 +55,6 @@ methods: {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-div.container {
-  max-width: 800px;
-  margin: 0 auto;
-}
 
-p.error {
-  border: 1px solid #ff5b5f;
-  background-color: #ffc5c1;
-  padding:  10px;
-  margin-bottom: 15px;
-}
 
-div.post {
-  position: relative;
-  border: 1px solid #5bd658;
-  background-color:  #bcffb8;
-  padding: 10px 10px 30px 10px;
-  margin-bottom: 15px;
-}
-
-div.created-at {
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 5px 15px 5px 15px;
-  background-color: darkgreen;
-  color: white;
-  font-size: 13px;
-}
-
-p.text {
-  font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 0;
-}
 </style>
