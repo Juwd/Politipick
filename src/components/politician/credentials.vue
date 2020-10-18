@@ -1,40 +1,16 @@
 <template>
-    <v-container>
-        <v-row wrap>
+    <v-container fluid>
+        <v-row wrap >
             <v-col md="6" sm="12">
-                <v-card >
-                    <v-card-title>
-                        <v-icon left large>mdi-school </v-icon>Educational Background
-                    </v-card-title>
-                    <div  v-for="detail in details.school" :key="detail.index">
-                        <v-card-subtitle class="ml-11"><strong>{{detail.description}},</strong></v-card-subtitle>
-                        <v-card-text class="ml-11"> {{detail.level}}</v-card-text>
-                    </div>
-                </v-card>
+                <school/>
             </v-col>
             <v-col md="6" xs="12">
-                <v-card>
-                    <v-card-title>
-                        <v-icon left large>mdi-certificate </v-icon>Certifications
-                    </v-card-title>
-                    <div v-for="detail in details.certificate" :key="detail.index">
-                        <v-card-subtitle class="ml-11"><strong>{{detail.description}},</strong></v-card-subtitle>
-                        <v-card-text class=ml-11>{{detail.place}}</v-card-text>
-                    </div>
-                </v-card>
+                <certificate/>
             </v-col>
         </v-row>
         <v-row>
             <v-col lg='12'>
-                <v-card>
-                    <v-card-title>
-                        <v-icon left large>mdi-google-analytics </v-icon>Economic Plan
-                    </v-card-title>
-                    <div v-for="detail in details.plans" :key="detail.index">
-                        <!-- <v-card-subtitle class="ml-11"><strong>{{detail.description}},</strong></v-card-subtitle> -->
-                        <v-card-text class=ml-11>{{detail}}</v-card-text>
-                    </div>
-                </v-card>
+                <plan/>
             </v-col>
         </v-row>
         <v-row>
@@ -95,14 +71,24 @@
 </template>
 
 <script>
+import school from './credentials.details/school';
+import certificate from './credentials.details/certificate';
+import plan from './credentials.details/plan'
 export default {
     name:'credentials',
     data () {
         return {
             details: {school:[{description:'Unibersidad ng somewhere' ,level:'PHD in economics'}, {description:'That university' ,level:'Master in economics'}], 
-                    certificate:[{description: 'magaling lang', place: 'DSWD'}, {description: 'taga hulma ng lupa', place: 'DPWH'}], plans:['wala','wala talaga', 'mag budots'], highlights:[{description:'nagpatayo ng waiting shed', date:'2020'}], belief:'Authoritarianism',
-                    affiliation:[{description: 'kaliwa', date: '2016'}, {description: 'kanan', date: '2020'}], job:'Taga-kurakot', relatives:[{person:'John doe',position:'VP of finance'}]}
+                    certificate:[{description: 'magaling lang', place: 'DSWD'}, {description: 'taga hulma ng lupa', place: 'DPWH'}], 
+                    plan:['wala','wala talaga', 'mag budots'], highlights:[{description:'nagpatayo ng waiting shed', date:'2020'}], belief:'Authoritarianism',
+                    affiliation:[{description: 'kaliwa', date: '2016'}, {description: 'kanan', date: '2020'}], job:'Taga-kurakot', relatives:[{person:'John doe',position:'VP of finance'}], citation:[{url:"a.com", cited:"school"}, {url:"b.com", cited:"school"}, {url:"c.com", cited:"certificate"},{url:"d.com", cited:"plans"},{url:"e.com", cited:"highlights"}, 
+                    {url:"f.com", cited:"Affiliation"},{url:"c.com", cited:"belief"}, {url:"c.com", cited:"job"}]}
         }
+    },
+    components: {
+        certificate,
+        school,
+        plan
     }
 }
 </script>

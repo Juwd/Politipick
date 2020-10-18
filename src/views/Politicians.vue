@@ -4,7 +4,7 @@
       <v-flex lg8>
     <v-card flat>
         <v-card-title class="text-center justify-center py-6">
-          <h1 class="font-weight-bold display-3 basil--text">Name of Politician</h1>
+          <h1 class="font-weight-bold display-3 basil--text">{{politician.name}}</h1>
         </v-card-title>
     <v-tabs background-color="transparent" color="basil" v-model="tab" grow icons-and-text>
       <v-tab v-for="item in items" :key="item.title">
@@ -56,7 +56,8 @@ export default {
   data ()  { return {
     tab: null,
     items: [ {title:'Credentials', icons:'mdi-certificate-outline', components:'credentials'}, {title:'Deeds', icons:'mdi-clipboard-list-outline'}, {title:'Campaign Promises', icons: 'mdi-hand-peace'}, {title:'Praises' , icons:'mdi-thumb-up-outline'}, {title:'Criticisms', icons: 'mdi-thumb-down-outline'}
-    ]
+    ],
+    politician:{name:'Name of Politician'}
   }
   }
 }
