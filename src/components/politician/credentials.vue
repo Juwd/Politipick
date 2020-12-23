@@ -15,65 +15,38 @@
         </v-row>
         <v-row>
             <v-col lg='12'>
-                <v-card>
-                    <v-card-title>
-                        <v-icon left large>mdi-seal </v-icon>Political Highlights
-                    </v-card-title>
-                    <div v-for="detail in details.highlights" :key="detail.index">
-                        <v-card-subtitle class="ml-11"><strong>{{detail.description}},</strong> {{detail.date}}</v-card-subtitle> 
-                    </div>
-                </v-card>
+                <highlights/>
             </v-col>
         </v-row>
         <!-- for political beliefs -->
         <v-row >
             <v-col  md="6" sm="12">
-                <v-card >
-                    <v-card-title >
-                        <v-icon left large>mdi-lightbulb-group</v-icon>Political Belief
-                    </v-card-title>
-                    <v-card-subtitle class="ml-11">{{details.belief}}</v-card-subtitle>
-                </v-card>
+            <belief/>
             </v-col>
             <v-col md="6" xs="12">
-                <v-card>
-                    <v-card-title>
-                        <v-icon left large>mdi-relation-one-to-one-or-many </v-icon>Political Affiliation History
-                    </v-card-title>
-                    <div v-for="detail in details.affiliation" :key="detail.index">
-                        <v-card-subtitle class="ml-11"><strong>{{detail.description}},</strong> {{detail.date}}</v-card-subtitle>
-                    </div>
-                </v-card>
+                <affiliation/>
             </v-col>
         </v-row>
         <v-row>
             <v-col md="6" sm="12">
-                
-                <v-card >
-                    <v-card-title>
-                        <v-icon left large>mdi-briefcase-variant</v-icon>Former Job
-                    </v-card-title>
-                    <v-card-subtitle class="ml-11">{{details.job}}</v-card-subtitle>
-                </v-card>
+                <job/>
             </v-col>
             <v-col md="6" xs="12">
-                <v-card>
-                    <v-card-title>
-                        <v-icon left large>mdi-human-male-female </v-icon>Relatives in Position
-                    </v-card-title>
-                    <div v-for="detail in details.relatives" :key="detail.index">
-                        <v-card-subtitle class="ml-11"><strong>{{detail.person}},</strong> {{detail.position}}</v-card-subtitle>
-                    </div>
-                </v-card>
+                <relatives/>
             </v-col>
         </v-row>
     </v-container>
 </template>
 
 <script>
-import school from './credentials.details/school';
-import certificate from './credentials.details/certificate';
+import school from './credentials.details/school'
+import certificate from './credentials.details/certificate'
 import plan from './credentials.details/plan'
+import highlights from './credentials.details/highlights'
+import belief from './credentials.details/belief'
+import affiliation from './credentials.details/affiliation'
+import job from './credentials.details/job'
+import relatives from './credentials.details/relatives'
 export default {
     name:'credentials',
     data () {
@@ -88,7 +61,12 @@ export default {
     components: {
         certificate,
         school,
-        plan
+        plan,
+        highlights,
+        belief,
+        affiliation,
+        job,
+        relatives
     }
 }
 </script>
