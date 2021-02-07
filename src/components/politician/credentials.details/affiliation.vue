@@ -1,5 +1,5 @@
 <template>
-    <v-card @click="reveal = !reveal">
+    <v-card @click="reveal = !reveal" >
         <v-tooltip bottom :nudge-top="30">
             <template v-slot:activator="{on, attrs}"> <!-- to hover tool tip -->
             <v-card-title v-bind="attrs" v-on="on">
@@ -11,7 +11,7 @@
             <span v-if="citeAffiliation.length" >cited</span>
             <span v-else>No citation found</span>
         </v-tooltip>
-                <div v-for="detail in details.affiliation" :key="detail.index">
+                <div v-for="detail in details.affiliations" :key="detail.index">
                         <v-card-subtitle class="ml-11"><strong>{{detail.description}},</strong> {{detail.date}}</v-card-subtitle> 
                 </div>
 
@@ -30,19 +30,18 @@
 <script>
 export default {
     name:'affiliation',
+    props : ['detail'],
     data () {
         return {
-            details: {school:[{description:'Unibersidad ng somewhere' ,level:'PHD in economics'}, {description:'That university' ,level:'Master in economics'}], 
-                    certificate:[{description: 'magaling lang', place: 'DSWD'}, {description: 'taga hulma ng lupa', place: 'DPWH'}], plan:['wala','wala talaga', 'mag budots'], highlights:[{description:'nagpatayo ng waiting shed', date:'2020'}], belief:'Authoritarianism',
-                    affiliation:[{description: 'kaliwa', date: '2016'}, {description: 'kanan', date: '2020'}], job:'Taga-kurakot', relatives:[{person:'John doe',position:'VP of finance'}], citation:[{url:"a.com", cited:"school"}, {url:"b.com", cited:"school"}, {url:"c.com", cited:"certificate"},{url:"d.com", cited:"plan"},{url:"e.com", cited:"highlights"}, 
-                    {url:"f.com", cited:"affiliation"},{url:"c.com", cited:"belief"}, {url:"c.com", cited:"job"}]},
-            reveal:false
+            details: this.detail,
+            reveal: false,
         }
     },
-    computed : {
+computed : {
         //you could optimize this by using only one filtering tool, but I am too lazy to think right now 
         citeAffiliation: function() {
-            return this.details.citation.filter(function(x) {
+            console.log("this one" + this.details._id);
+            return this.details.citations.filter(function(x) {
                 return (x.cited=="affiliation")
             })
         }

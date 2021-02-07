@@ -36,7 +36,7 @@ export default {
     data () {
         return {drawer: false,
         links: [{ icon:'mdi-home', text:"Home", route:"/"},
-        { icon:'mdi-account-group-outline', text: "Politicians", route: "/Politicians"},
+        { icon:'mdi-account-group-outline', text: "Politicians", route: "/politicians"},
         { icon:'mdi-information-outline', text:"about", route:"/about"}
     ]}
     }

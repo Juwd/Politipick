@@ -20,9 +20,14 @@ Vue.use(VueRouter)
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
-    path: '/politicians',
+    path: '/politicians/:id',
     name: 'Politicians',
     component: () => import(/*webpackChunkName: "politicians" */'../views/Politicians.vue'),  
+  },
+  {
+    path: '/politicians/',
+    name: 'PoliticianList',
+    component: () => import(/*webpackChunkName: "politicianList" */ '../views/PoliticianList.vue')
   }
 ]
 

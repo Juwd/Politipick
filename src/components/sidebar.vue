@@ -1,9 +1,9 @@
 <template>
     <v-card>
-        <v-img src="@/assets/person.png"></v-img>
-    <v-card-title>{{details.title}}</v-card-title>
-    <v-card-subtitle>{{details.status}}, {{details.politicalAffiliation}}</v-card-subtitle>
-    <blockquote class="headline text-center">" Words I am known by " </blockquote>    
+        <v-img :src="details.avatar"></v-img>
+    <v-card-title>{{details.position}}</v-card-title>
+    <v-card-subtitle>{{details.status}}, {{latestAffiliation}}</v-card-subtitle>
+    <blockquote class="headline text-center">" {{details.famousWords}} " </blockquote>    
     <!-- <v-tabs v-model='tabs' fixed-tabs>
     <v-tab v-for="promise in promises" :key="promise.title">
      {{promise.title}}
@@ -23,11 +23,20 @@
 <script>
 export default {
     name: 'sidebar',
-    data () { return{
+    props : ['detail'],
+    data () { 
+      return{
         tabs: null,
-          details: {title: 'President',politicalAffiliation: 'Current Political Affiliation', status: 'Candidate'},
+        details: this.detail,
           //promises: [{title: 'Total Promises', promise:'20'}, {title: 'Promises Followed', promise: '0'}]
     }
+    },
+    computed : {
+      latestAffiliation: function() {
+            return (this.details.affiliations.reduce((max,affiliation) => 
+            affiliation.date.localeCompare(max.date) <0? max:affiliation).date
+            )
+        }
     }
 }
 </script>
