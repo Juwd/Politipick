@@ -2,17 +2,19 @@
     <div class="PoliticianList">
         <h1 class="subheading grey--text">Politicians</h1>
         <v-container class="my-5">
-            <v-layout row class="mb-3">
-                <v-btn small flat color="grey" @click="sortBy('position')">
+            <!-- <v-layout row class="mb-3">
+                <v-btn small color="grey" @click="sortBy('position')">
                     <v-icon left>mdi-account-tie</v-icon>
                     <span class="caption text-lowercase">By position</span>
                 </v-btn>
-                <v-btn small flat color="grey" @click="sortBy('name')">
+                <v-btn small color="grey" @click="sortBy('name')">
                     <v-icon left>mdi-account-box</v-icon>
                     <span class="caption text-lowercase">By name</span>
                 </v-btn>
-            </v-layout>
-            <v-card outlined class="pa-3" v-for="detail in details" :key="detail.name" :to="'politicians/'+ detail._id" router> 
+            </v-layout> -->
+            <!-- if plenty of politicians, search at the database itself -->
+            <v-text-field hide-details="auto" type="text" v-model="search" placeholder="search politicians"></v-text-field>
+            <v-card outlined wrap class="pa-3" v-for="detail in filteredPolitician" :key="detail.name" :to="'politicians/'+ detail._id" router> 
             <v-layout >
                 <v-flex xs12 md1 lg1>
                     <v-img contain max-height="100" max-width="100" :src="detail.avatar" :alt="detail.name"></v-img>
@@ -37,6 +39,7 @@ export default {
   data () { return {
       profileLoaded : false,
       details : [],
+      search:''
   }
   },
   async created() {
@@ -47,6 +50,13 @@ export default {
             //console.log(this.profileLoaded)
         } catch (err) {
             this.error = err.message
+        }
+    },
+    computed : {
+        filteredPolitician: function (){
+            return this.details.filter((politician) => {
+                return politician.name.toLowerCase().match(this.search.toLowerCase());
+            });
         }
     },
     methods :{

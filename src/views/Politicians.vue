@@ -20,10 +20,10 @@
 
     <v-tabs-items v-model="tab">
       <v-tab-item v-for="item in items" :key="item.title">
-        <credentials v-if="item.title=='Credentials'"/>
-        <criticisms v-if="item.title=='Criticisms'" />
-        <deeds v-if="item.title=='Deeds'" />
-        <praises v-if="item.title=='Praises'"/>
+        <credentials v-if="item.title=='Credentials'" />
+        <criticisms v-if="item.title=='Criticisms'" v-bind:detail="details" />
+        <deeds v-if="item.title=='Deeds'" v-bind:detail="details"/>
+        <praises v-if="item.title=='Praises'" v-bind:detail="details"/>
         <promises v-if="item.title=='Campaign Promises'"/>
       </v-tab-item>
     </v-tabs-items>
