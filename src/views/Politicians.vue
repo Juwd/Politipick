@@ -24,7 +24,7 @@
         <criticisms v-if="item.title=='Criticisms'" v-bind:detail="details" />
         <deeds v-if="item.title=='Deeds'" v-bind:detail="details"/>
         <praises v-if="item.title=='Praises'" v-bind:detail="details"/>
-        <promises v-if="item.title=='Campaign Promises'"/>
+        <promises v-if="item.title=='Campaign Promises'" v-bind:detail="details"/>
       </v-tab-item>
     </v-tabs-items>
   </v-card>
