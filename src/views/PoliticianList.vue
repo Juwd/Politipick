@@ -14,6 +14,7 @@
             </v-layout> -->
             <!-- if plenty of politicians, search at the database itself -->
             <v-text-field hide-details="auto" type="text" v-model="search" placeholder="search politicians"></v-text-field>
+             <v-progress-linear :active="profileLoaded" :indeterminate="profileLoaded" absolute bottom color="deep-purple accent-4"></v-progress-linear>
             <v-card outlined wrap class="pa-3" v-for="detail in filteredPolitician" :key="detail.name" :to="'politicians/'+ detail._id" router> 
             <v-layout >
                 <v-flex xs12 md1 lg1>
@@ -37,7 +38,7 @@ export default {
   components: {
   },
   data () { return {
-      profileLoaded : false,
+      profileLoaded : true,
       details : [],
       search:''
   }
@@ -45,7 +46,7 @@ export default {
   async created() {
         try {
             this.details = await politicianService.getPoliticians();
-            this.profileLoaded = true;
+            this.profileLoaded = false;
             //console.log(this.details);
             //console.log(this.profileLoaded)
         } catch (err) {

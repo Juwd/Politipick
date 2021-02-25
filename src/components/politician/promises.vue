@@ -82,24 +82,28 @@
                         <v-card-text>{{ subpolicy.description }}</v-card-text>
                         <v-divider inset></v-divider>
                         <v-card-title>What {{details.name}} has to say</v-card-title>
-                        <!-- Edit this one to have promises that is equivalent to the subpolicies -->
-                        <v-card-text v-if="details.promises">{{details.promises}}</v-card-text>
-                        <v-card-text v-else>Nothing to say :( </v-card-text>
-                        <v-divider inset></v-divider>
-                        <v-card-title>Why</v-card-title>
-                        <!-- Edit this one to have promises that is equivalent to the subpolicies -->
-                        <v-card-text v-if="details.promises">{{details.promises}}</v-card-text>
-                        <v-card-text v-else>Nothing to say :( </v-card-text>
-                        <v-divider inset></v-divider>
-                        <v-card-title>How</v-card-title>
-                        <!-- Edit this one to have promises that is equivalent to the subpolicies -->
-                        <v-card-text v-if="details.promises">{{details.promises}}</v-card-text>
-                        <v-card-text v-else>Nothing to say :( </v-card-text>
-                        <v-divider></v-divider>
-                        <v-card-title>Citations</v-card-title>
-                        <!-- Edit this one to have promises that is equivalent to the subpolicies -->
-                        <v-card-text v-if="details.promises">{{details.promises}}</v-card-text>
-                        <v-card-text v-else>Nothing to say :( </v-card-text>
+                        <!-- For getting the specific reply for each subpolicy -->
+                        <div v-for="filteredSubpolicy in filteredPolicy(subpolicy.title)" :key="filteredSubpolicy._id">
+                            <v-card-text v-if="filteredSubpolicy.opinion">{{filteredSubpolicy.opinion}}</v-card-text>
+                            <v-card-text v-else>Nothing to say :(</v-card-text>
+                            <v-divider inset></v-divider>
+                            <v-card-title>Why</v-card-title>
+                            <!-- Why -->
+                            <v-card-text v-if="filteredSubpolicy.why">{{filteredSubpolicy.why}}</v-card-text>
+                            <v-card-text v-else>Nothing to say :( </v-card-text>
+                            <v-divider inset></v-divider>
+                            <v-card-title>How</v-card-title>
+                            <!-- how -->
+                            <v-card-text v-if="filteredSubpolicy.how">{{filteredSubpolicy.how}}</v-card-text>
+                            <v-card-text v-else>Nothing to say :( </v-card-text>
+                            <v-divider></v-divider>
+                            <v-card-title>Citations</v-card-title>
+                            <!-- Citations -->
+                            <div v-for="citations in filteredSubpolicy.citation" :key="citations._id">
+                                <v-card-text v-if="filteredSubpolicy.citation">{{citations.url}}</v-card-text>
+                                <v-card-text v-else>No citations </v-card-text>
+                            </div>
+                        </div>
                     </v-card>
                     </v-window-item>
                 </v-window>
@@ -125,13 +129,21 @@ export default {
         overlay:false,
         migration:false,
         window:0,
-        policies: [{title:"Borders and Migration", img:"https://res.cloudinary.com/polipick/image/upload/v1613182324/policies/BordersAndMigration_kublfb.jpg",model:false,description:"The Covid-19 pandemic has seen global travel grind to a halt. How the country manages its borders is now a major election issue, especially as pressure mounts around reopening the border.",
+        policies: [{name:"borders",title:"Borders and Migration", img:"https://res.cloudinary.com/polipick/image/upload/v1613182324/policies/BordersAndMigration_kublfb.jpg",model:false,description:"The Covid-19 pandemic has seen global travel grind to a halt. How the country manages its borders is now a major election issue, especially as pressure mounts around reopening the border.",
                 subtopics:[{window:0,title:"Immigration", description:"Immigration has been restricted by the current government but some parties say that PH shoud limit immigration further. Others say skills and labour from overseas is exactly what the country needs to help the economy recover from Covid-19"},{window:1,title:"Borders and quarantine", description:"With few exceptions, only citizens and permanent residents can cross the border, and those who do arrive must spend 14 days in managed isolation"},{window:2,title:"Refugees", description:"Repatriation of Filipino refugees remain difficult due to the ongoing conflict in the southern Philippines."},]},
-        {title:"Community and Inclusion", img:"https://res.cloudinary.com/polipick/image/upload/v1613182324/policies/BordersAndMigration_kublfb.jpg",model:false},
-        {title:"Defence and Foreign affairs", img:"https://res.cloudinary.com/polipick/image/upload/v1613182324/policies/BordersAndMigration_kublfb.jpg",model:false},
-        {title:"Economy", img:"https://res.cloudinary.com/polipick/image/upload/v1613182324/policies/BordersAndMigration_kublfb.jpg",model:false}]
+        {name:"community",title:"Community and Inclusion", img:"https://res.cloudinary.com/polipick/image/upload/v1613454170/policies/communityAndInclusion_izxifk.png",model:false},
+        {name:"defence",title:"Defence and Foreign affairs", img:"https://res.cloudinary.com/polipick/image/upload/v1613454222/policies/defenceAndForeignAffairs_qknhdz.jpg",model:false},
+        {name:"economy",title:"Economy", img:"https://res.cloudinary.com/polipick/image/upload/v1613454273/policies/economy_ln0k5n.jpg",model:false}]
     }},
-    
+    methods: {
+        filteredPolicy: function(policy) {
+            return this.details.promises.filter((sub)=> {
+                return sub.subpolicy==policy
+            })
+            
+        }
+        
+    }
 }
 
 </script>

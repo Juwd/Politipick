@@ -76,7 +76,7 @@
             </v-col>
             <v-col md="6" xs="12">
                 <div v-if="profileLoaded">
-                    <affiliation v-bind:detail="details"/>
+                    <job v-bind:detail="details"/>
                 </div>
                 <div v-else>
                 <v-sheet :color="`grey ${theme.isDark ? 'darken-2' : 'lighten-4'}`" class="pa-3">
@@ -91,7 +91,7 @@
         <v-row>
             <v-col md="6" sm="12">
                 <div v-if="profileLoaded">
-                    <job v-bind:detail="details"/>
+                    <affiliation v-bind:detail="details"/>
                 </div>
                 <div v-else>
                 <v-sheet :color="`grey ${theme.isDark ? 'darken-2' : 'lighten-4'}`" class="pa-3">
