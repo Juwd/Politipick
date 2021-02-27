@@ -30,18 +30,26 @@ export default {
     props : ['detail'],
     data () {
         return {
-            details: this.detail,
+            details: this.detail.job ,
             reveal: false,
+            citeJob:[]
         }
     },
-    computed : {
-        //you could optimize this by using only one filtering tool, but I am too lazy to think right now 
-        citeJob: function() {
-            return this.details.citations.filter(function(x) {
-                return (x.cited=="job")
-            })
+    created() {
+        for(let i=0; i<this.details.length;i+=1)
+        {
+            for( let x=0; x<this.details[i].citation.length;x+=1)
+                this.citeJob.push(this.details[i].citation[x])
         }
     },
+    // computed : {
+    //     //you could optimize this by using only one filtering tool, but I am too lazy to think right now 
+    //     citeJob: function() {
+    //         return this.details.citations.filter(function(x) {
+    //             return (x.cited=="job")
+    //         })
+    //     }
+    // },
 }
 </script>
 <style>

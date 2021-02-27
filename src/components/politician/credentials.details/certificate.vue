@@ -12,7 +12,7 @@
             <span v-else>No citation found</span>
         </v-tooltip> 
         <!-- certificate for citation, certificates for description -->
-        <div v-for="detail in details.certificates" :key="detail.index">
+        <div v-for="detail in details" :key="detail.index">
             <v-card-subtitle class="ml-11"><strong>{{detail.description}},</strong></v-card-subtitle>
             <v-card-text class=ml-11>{{detail.place}}</v-card-text>
         </div>
@@ -34,18 +34,26 @@ export default {
     props : ['detail'],
     data () {
         return {
-            details: this.detail,
+            details: this.detail.certificates,
             reveal: false,
+            citeCertificate:[],
+        }
+    },
+    created() {
+        for(let i=0; i<this.details.length;i+=1)
+        {
+            for( let x=0; x<this.details[i].citation.length;x+=1)
+                this.citeCertificate.push(this.details[i].citation[x])
         }
     },
     computed : {
         //you could optimize this by using only one filtering tool, but I am too lazy to think right now 
-        citeCertificate: function() {
-            return this.details.citations.filter(function(x) {
-                return (x.cited=="certificate")
-            })
-        }
-    },
+    //     citeCertificate: function() {
+    //         return this.details.citations.filter(function(x) {
+    //             return (x.cited=="certificate")
+    //         })
+    //     }
+     },
 }
 </script>
 <style>

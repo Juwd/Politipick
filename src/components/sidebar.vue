@@ -1,9 +1,9 @@
 <template>
     <v-card>
         <v-img :src="details.avatar"></v-img>
-    <v-card-title>{{details.position}}</v-card-title>
-    <v-card-subtitle>{{details.status}}, {{latestAffiliation}}</v-card-subtitle>
-    <blockquote class="headline text-center">" {{details.famousWords}} " </blockquote>    
+    <v-card-title>{{details.position.position}}</v-card-title>
+    <v-card-subtitle>{{details.status.status}}, {{latestAffiliation}}</v-card-subtitle>
+    <blockquote class="headline text-center">" {{details.famousWords.famousWords}} " </blockquote>    
     <!-- <v-tabs v-model='tabs' fixed-tabs>
     <v-tab v-for="promise in promises" :key="promise.title">
      {{promise.title}}
@@ -34,7 +34,7 @@ export default {
     computed : {
       latestAffiliation: function() {
             return (this.details.affiliations.reduce((max,affiliation) => 
-            affiliation.date.localeCompare(max.date) <0? max:affiliation).date
+            affiliation.date.localeCompare(max.date) <0? max:affiliation).description
             )
         }
     }

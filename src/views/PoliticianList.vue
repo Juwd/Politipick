@@ -22,7 +22,7 @@
                 </v-flex>
                 <v-flex xs12 lg6>
                     <div class="title">{{detail.name}}</div>
-                    <div class="caption">{{detail.position}}, <i>{{detail.status}}</i></div>
+                    <div class="caption">{{detail.position.position}}, <i>{{detail.status.status}}</i></div>
                 </v-flex>
             </v-layout>
             </v-card>

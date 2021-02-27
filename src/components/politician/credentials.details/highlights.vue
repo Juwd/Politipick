@@ -11,7 +11,7 @@
             <span v-if="citeHighlights.length" >cited</span>
             <span v-else>No citation found</span>
         </v-tooltip>
-                <div v-for="detail in details.highlights" :key="detail.index">
+                <div v-for="detail in details" :key="detail.index">
                         <v-card-subtitle class="ml-11"><strong>{{detail.description}},</strong> {{detail.date}}</v-card-subtitle> 
                 </div>
 
@@ -33,18 +33,26 @@ export default {
     props : ['detail'],
     data () {
         return {
-            details: this.detail,
+            details: this.detail.highlights,
             reveal: false,
+            citeHighlights: [],
         }
     },
-    computed : {
-        //you could optimize this by using only one filtering tool, but I am too lazy to think right now 
-        citeHighlights: function() {
-            return this.details.citations.filter(function(x) {
-                return (x.cited=="highlight")
-            })
+    created() {
+        for(let i=0; i<this.details.length;i+=1)
+        {
+            for( let x=0; x<this.details[i].citation.length;x+=1)
+                this.citeHighlights.push(this.details[i].citation[x])
         }
     },
+    // computed : {
+    //     //you could optimize this by using only one filtering tool, but I am too lazy to think right now 
+    //     citeHighlights: function() {
+    //         return this.details.citations.filter(function(x) {
+    //             return (x.cited=="highlight")
+    //         })
+    //     }
+    // },
     
 }
 </script>

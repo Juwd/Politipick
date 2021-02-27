@@ -11,8 +11,8 @@
             <span v-if="citePlan.length" >cited</span>
             <span v-else>No citation found</span>
         </v-tooltip>
-                <div v-for="detail in details.plans" :key="detail.index">
-                    <v-card-text class=ml-11>{{detail}}</v-card-text>
+                <div v-for="detail in details" :key="detail.index">
+                    <v-card-text class=ml-11>{{detail.plans}}</v-card-text>
                 </div>
 
             <!-- To call all citations -->
@@ -33,17 +33,25 @@ export default {
     props : ['detail'],
     data () {
         return {
-            details: this.detail,
+            details: this.detail.plans,
             reveal: false,
+            citePlan:[],
+        }
+    },
+    created() {
+        for(let i=0; i<this.details.length;i+=1)
+        {
+            for( let x=0; x<this.details[i].citation.length;x+=1)
+                this.citePlan.push(this.details[i].citation[x])
         }
     },
     computed : {
         //you could optimize this by using only one filtering tool, but I am too lazy to think right now 
-        citePlan: function() {
-            return this.details.citations.filter(function(x) {
-                return (x.cited=="plan")
-            })
-        }
+        // citePlan: function() {
+        //     return this.details.citations.filter(function(x) {
+        //         return (x.cited=="plan")
+        //     })
+        // }
     },
     
 }

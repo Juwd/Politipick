@@ -26,21 +26,28 @@
 
 <script>
 export default {
-    name:'job',
+    name:'belief',
     props : ['detail'],
     data () {
         return {
-            details: this.detail,
+            details: this.detail.belief,
             reveal: false,
+            citeBelief:[]
+        }
+    },
+    created() {
+        for(let i=0; i<this.details.citation.length;i+=1)
+        {
+            this.citeBelief.push(this.details.citation[i])
         }
     },
     computed : {
         //you could optimize this by using only one filtering tool, but I am too lazy to think right now 
-        citeBelief: function() {
-            return this.details.citations.filter(function(x) {
-                return (x.cited=="belief")
-            })
-        }
+        // citeBelief: function() {
+        //     return this.details.citations.filter(function(x) {
+        //         return (x.cited=="belief")
+        //     })
+        // }
     },
 }
 </script>
