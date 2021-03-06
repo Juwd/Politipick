@@ -1,7 +1,7 @@
 <template>
     <v-card>
         <v-img :src="details.avatar"></v-img>
-    <v-card-title>{{details.position.position}}</v-card-title>
+    <v-card-title>{{details.status.position}}</v-card-title>
     <v-card-subtitle>{{details.status.status}}, {{latestAffiliation}}</v-card-subtitle>
     <blockquote class="headline text-center">" {{details.famousWords.famousWords}} " </blockquote>    
     <!-- <v-tabs v-model='tabs' fixed-tabs>

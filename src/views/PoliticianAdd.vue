@@ -27,7 +27,7 @@
       <!-- content for credentials -->
       <!-- <v-container> -->
       <v-stepper-content step="1">
-        <credentials v-bind:politicians="politician"/>
+        <credentials v-bind:politicians="politician"> </credentials>
 
         <v-btn color="primary" @click="e1 = 2">
           Continue
@@ -38,7 +38,7 @@
       <!-- </v-container> -->
       <!-- content for citation -->
       <v-stepper-content step="2">
-        <citations v-bind:politicians="politician"/>
+        <citations v-bind:politicians="politician"></citations>
 
         
         <v-btn color="primary" @click="e1 = 3">
@@ -78,9 +78,9 @@ export default {
   },
   data () { return {
     e1:1,
-    politician:{credentials:{name:'' ,status:'',position:'',pastStatus:'',pastPosition:'', schools:[{description:"",level:"",}], 
-                  certificates:[{description:"",place:""}], plans:[], highlights:[{description:"", date:""}], belief:"", 
-                  affiliations:[{description:"", date:""}],job:"", relatives:[{person:"",position:""}], },}
+    politician:{credentials:{name:'' ,status:{status:'',position:'',citation:[{url:""}]},pastStatus:{pastStatus:'',pastPosition:'', citation:[{url:""}]},famousWords:{famousWords:"",citation:[{url:""}]}, schools:[{description:"",level:"",citation:[{url:""}]}], 
+                  certificates:[{description:"",place:"",citation:[{url:""}]}], plans:[], highlights:[{description:"", date:"",citation:[{url:""}]}], belief:{belief:"",citation:[{url:""}]}, 
+                  affiliations:[{description:"", date:"",citation:[{url:""}]}],job:{job:"",citation:[{url:""}]}, relatives:[{person:"",position:"",citation:[{url:""}]}], },}
   }
   },
   methods :{

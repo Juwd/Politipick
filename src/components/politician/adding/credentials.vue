@@ -21,18 +21,26 @@
       <!-- Position -->
       <v-row>
         <v-col md="3">
-            <v-select v-model="politician.credentials.status" :items="credentials.status" label="Latest status" outlined></v-select>
+            <v-select v-model="politician.credentials.status.status" :items="credentials.status" label="Latest status" outlined></v-select>
         </v-col>
         <v-col md="3">
-            <v-text-field v-model="politician.credentials.position" required label="Position" :rules="rules" hide-details="auto"
+            <v-text-field v-model="politician.credentials.status.position" required label="Position" :rules="rules" hide-details="auto"
             ></v-text-field>
         </v-col>
         <v-col md="3">
-            <v-select v-model="politician.credentials.pastStatus" :items="credentials.status" label="Past status" outlined></v-select>
+            <v-select v-model="politician.credentials.pastStatus.pastStatus" :items="credentials.status" label="Past status" outlined></v-select>
         </v-col>
         <v-col md="3">
-            <v-text-field v-model="politician.credentials.pastPosition" required label="Position" :rules="rules" hide-details="auto"
+            <v-text-field v-model="politician.credentials.pastStatus.pastPosition" required label="Position" :rules="rules" hide-details="auto"
             ></v-text-field>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col sm="2">
+          <v-input :messages="['Anung pinakang magandang salita, na lumabas sa bungaga nito?']" prepend-icon="mdi-account-tie-voice">Famous words</v-input> 
+        </v-col>
+        <v-col sm="10">
+          <v-text-field v-model="politician.credentials.famousWords.famousWords" placeholder="E.g. Ang kabataan ang pag-asa ng bayan"></v-text-field>
         </v-col>
       </v-row>
       <!-- Education shit -->
@@ -82,7 +90,7 @@
             Politician's Plans 
           </v-card-title>
           <v-card-text v-for="plan in politician.credentials.plans" :key="plan.index">
-              {{plan}}
+              {{plan.plans}}
           </v-card-text>
         </v-card>
         <v-divider></v-divider>
@@ -110,14 +118,14 @@
           </v-col>
           <v-col sm="4">
               <!-- <v-text-field  label="E.g. christian democracy" :rules="rules" hide-details="auto"> </v-text-field> -->
-              <v-combobox v-model="politician.credentials.belief"  :items="credentials.beliefs" label="Select a belief or add a new one" clearable outlined></v-combobox>
+              <v-combobox v-model="politician.credentials.belief.belief"  :items="credentials.beliefs" label="Select a belief or add a new one" clearable outlined></v-combobox>
           </v-col>
       <!-- Job -->
           <v-col sm="2">
             <v-input :messages="['Mayroong trabaho ba ito bago napapad dito?']" prepend-icon="mdi-briefcase-variant">Job</v-input> 
           </v-col>
           <v-col sm="4">
-              <v-text-field placeholder="E.g. Chairman of X company" :rules="rules" hide-details="auto"> </v-text-field>
+              <v-text-field v-model="politician.credentials.job.job" placeholder="E.g. Chairman of X company" :rules="rules" hide-details="auto"> </v-text-field>
           </v-col>
       </v-row>
       <!-- Affiliation -->
@@ -201,9 +209,9 @@ export default {
       schools:["University of the Philippines", "De La Salle University", "University of Sto. Tomas", "Ateneo de Manila University"]},
       // Main data to be sent
       politician:{},
-      // politician:{credentials:{name:'' ,status:'',position:'',pastStatus:'',pastPosition:'', schools:[{description:"",level:"",}], 
-      //             certificates:[{description:"",place:""}], plans:[], highlights:[{description:"", date:""}], belief:"", 
-      //             affiliations:[{description:"", date:""}],job:"", relatives:[{person:"",position:""}], },}
+      // politician:{credentials:{name:'' ,status:{status:'',citation:[{url:""}]},position:{position:'',citation:[{url:""}]},pastStatus:{pastStatus:'',pastPosition:'', citation:[{url:""}]},famousWords:{famousWords:"",citation:[{url:""}]}, schools:[{description:"",level:"",citation:[{url:""}]}], 
+                  // certificates:[{description:"",place:"",citation:[{url:""}]}], plans:[], highlights:[{description:"", date:"",citation:[{url:""}]}], belief:{belief:"",citation:[{url:""}]}, 
+                  // affiliations:[{description:"", date:"",citation:[{url:""}]}],job:{job:"",citation:[{url:""}]}, relatives:[{person:"",position:"",citation:[{url:""}]}], },}
   }),
   created (){
     this.politician= this.politicians
@@ -216,7 +224,8 @@ export default {
      addEduc () {
          this.politician.credentials.schools.push({  
            level: "",
-           description:""
+           description:"",
+           citation:[{url:""}]
          })
          this.showIcon1=true
       },
@@ -234,6 +243,7 @@ export default {
          this.politician.credentials.certificates.push({ 
            description: "", 
            place: "",
+           citation:[{url:""}]
          })
          this.showIcon2=true
       },
@@ -250,6 +260,7 @@ export default {
          this.politician.credentials.highlights.push({ 
            description: "", 
            date: "",
+           citation:[{url:""}]
          })
          this.showIcon3=true
       },
@@ -266,7 +277,7 @@ export default {
         if (this.tempPlans) {
           if(!this.politician.credentials.plans.includes(this.tempPlans)){
             // this.tempPlans=this.tempPlans.split('\n').toString()
-            this.politician.credentials.plans.push(this.tempPlans.split('\n').join(""))
+            this.politician.credentials.plans.push({plans:this.tempPlans.split('\n').join(""),citation:[{url:""}]})
           }
           this.tempPlans=""
         }
@@ -275,6 +286,7 @@ export default {
          this.politician.credentials.affiliations.push({ 
            description: "", 
            date: "",
+           citation:[{url:""}]
          })
          this.showIcon4=true
       },
@@ -291,6 +303,7 @@ export default {
          this.politician.credentials.relatives.push({ 
            description: "", 
            date: "",
+           citation:[{url:""}]
          })
          this.showIcon5=true
       },
