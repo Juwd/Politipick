@@ -3,6 +3,11 @@
     <!-- Position -->
     <h1>General Background</h1>
     <v-divider></v-divider>
+    <!-- Adding the photographer -->
+    <!-- <v-row v-if="politician.image">
+      <v-col><v-img :src="politician.image"></v-img></v-col>
+      <v-col sm="2"><v-input :messages="['who is the photographer?']" prepend-icon="mdi-account-question">Position</v-input></v-col>
+    </v-row> -->
     <v-row v-if="politician.status.position">
       <v-col sm="2"><v-input :messages="['Anung gawa niya ngayon?']" prepend-icon="mdi-account-question">Position</v-input></v-col>
        <v-col sm="2">{{politician.status.status}}</v-col>

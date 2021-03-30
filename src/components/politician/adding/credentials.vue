@@ -16,6 +16,11 @@
         <v-col lg="6">
             <v-text-field v-model="lastName" :rules="rules" label="Last Name" @change="fullName"></v-text-field>
         </v-col>
+        <!-- Adding the avatar -->
+        <!-- <v-col lg="4">
+            <v-file-input v-model="politician.image" truncate-length="15" accept="image/png, image/jpeg, image/bmp"
+            prepend-icon="mdi-camera" placeholder="Upload Image of Politician here"></v-file-input>
+        </v-col> -->
       </v-row>
 
       <!-- Position -->
@@ -219,7 +224,6 @@ export default {
   methods: {
     fullName (){
       this.politician.credentials.name=this.firstName + ' ' + this.lastName
-      console.log(this.politician.credentials.name)
     },
      addEduc () {
          this.politician.credentials.schools.push({  
