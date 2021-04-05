@@ -1,19 +1,94 @@
 <template>
 <div>
     <h1>Deeds</h1>
+        <!-- <div v-for="element in tempArray" :key="element.index">
         <v-row>
-            <v-col lg="6">
-                <v-btn block>Add manually</v-btn>
-            </v-col>
-            <v-col lg="6">
-                <v-btn block>Add automatically</v-btn>
+            <v-col> <p>{{element}} {{element.index}}</p></v-col>
+        </v-row>
+        </div> -->
+        <v-row>
+            <v-col>
+            <div v-if="typeOfInput=='auto'">
+                <v-text-field placeholder="Add url of news site" v-model="autoVar" clearable required>
+                <template v-slot:append>
+                    <v-fade-transition leave-absolute>
+                        <v-progress-circular
+                        v-if="loadingText"
+                        size="24"
+                        color="info"
+                        indeterminate
+                        ></v-progress-circular>
+                        <v-icon @click="callAutoBackend(autoVar);loadingText=true" v-else>mdi-send</v-icon>
+                    </v-fade-transition>
+                </template>
+                </v-text-field>
+            </div>
+            <!-- manual addition -->
+            <div v-if="typeOfInput=='mano'">
+                <v-row>
+                    <v-col lg="12">
+                        <v-card outlined>
+                            <v-list-item three-line>
+                                <v-list-item-content> 
+                                    <div class="overline mb-4">
+                                        Publisher: <v-text-field required v-model="manoVar.publisher" placeholder="abs-cbn"></v-text-field>
+                                    </div>   
+                                    <v-list-item-title class="headline mb-1">
+                                        Title: <v-text-field v-model="manoVar.title" placeholder="Philippine politics under Duterte: A Mid term assessment"></v-text-field>
+                                    </v-list-item-title>
+                                    
+                                    <v-list-item-content>
+                                        Desciription: <v-text-field v-model="manoVar.description" placeholder="More than two years into Rodrigo Duterte’s presidency, the record is mixed with change, continuity, and regression. This should prompt more robust U.S. support for democracy in the Philippines"></v-text-field>
+                                    </v-list-item-content>
+                                    <v-list-item-content>
+                                        Image source: <v-text-field v-model="manoVar.image" placeholder="https://lp-cms-production.imgix.net/features/2019/08/shutterstock_1127874026-32c12e090f4f.jpg?auto=format&fit=crop&sharp=10&vib=20&ixlib=react-8.6.4&w=850"></v-text-field>
+                                        <small>note: Can only accept src at the mean time. The database can't save images. Please right click "Copy image location" in the said image</small>
+                                    </v-list-item-content>
+                                    <!-- <v-file-input label="Insert image here" :rules="rules" placeholder="Select your preferred photo" accept="image/png, image/jpeg, image/bmp" v-model="deeds.image" filled prepend-icon="mdi-camera"></v-file-input> 
+                                    for adding files directly-->
+                                    <v-btn @click="addMano();typeOfInput=''">Save</v-btn>
+                                </v-list-item-content>
+
+                            </v-list-item>
+                        </v-card>
+                    </v-col>    
+                </v-row>    
+            </div>
             </v-col>
         </v-row>
-
-        <v-row v-for="deeds in details.deeds" :key="deeds._id" wrap>
+        <v-row>
+            <v-col lg="6">
+                <v-btn block @click="typeOfInput='mano';">Add manually</v-btn>
+            </v-col>
+            <v-col lg="6">
+                <v-btn block @click="typeOfInput='auto';">Add automatically</v-btn>
+            </v-col>
+        </v-row>
+        <v-row v-for="(deeds,i) in tempArray" :key="deeds._id" wrap>
             <v-col lg=12>
                 <v-card outlined>
                     <v-list-item three-line>
+                        <div v-if="editingText">
+                        <v-list-item-content> 
+                            <div class="overline mb-4">
+                                Publisher: <v-text-field v-model="deeds.publisher"></v-text-field>
+                            </div>   
+                            <v-list-item-title class="headline mb-1">
+                                Title: <v-text-field v-model="deeds.title"></v-text-field>
+                            </v-list-item-title>
+                            
+                            <v-list-item-content>
+                                Desciription: <v-text-field v-model="deeds.description"></v-text-field>
+                            </v-list-item-content>
+                            <v-list-item-content>
+                                Image source: <v-text-field v-model="deeds.image"></v-text-field>
+                                <small>note: Can only accept src at the mean time. The database can't save images. Please right click "Copy image location" in the said image</small>
+                            </v-list-item-content>
+                            <!-- <v-file-input label="Insert image here" :rules="rules" placeholder="Select your preferred photo" accept="image/png, image/jpeg, image/bmp" v-model="deeds.image" filled prepend-icon="mdi-camera"></v-file-input> 
+                            for adding files directly-->
+                        </v-list-item-content>
+                        </div>
+                        <div v-else>
                         <v-list-item-content> 
                             <div class="overline mb-4">
                                 {{deeds.publisher}}
@@ -28,7 +103,20 @@
                             
                         </v-list-item-content>
                         <v-list-item-avatar tile class="ma-3" size="125"><v-img :src="deeds.image"></v-img></v-list-item-avatar>
+                        </div>
                     </v-list-item>
+                     <v-card-actions>
+                    <v-spacer></v-spacer>
+                        <v-btn icon @click="editingText = !editingText">
+                            <v-icon v-if="editingText">mdi-check</v-icon>
+                            <v-icon v-else>mdi-pencil-outline</v-icon>
+
+                        </v-btn>
+
+                        <v-btn icon @click="deleteThis(i)">
+                            <v-icon>mdi-delete</v-icon>
+                        </v-btn>
+                    </v-card-actions>
                 </v-card>
             </v-col>
         </v-row>
@@ -36,7 +124,7 @@
 </template>
 
 <script>
-
+import politicianService from '../../../service/politicianService'
 export default {
     name:'deeds',
     props : ['politicians'],
@@ -44,10 +132,45 @@ export default {
       return{
         tabs: null,
         details: this.politicians,
-        autoArray:[],
-        manoArray:[{publisher:'',title:'',description:''}],
+        tempArray:[],
+        deedsData:'',
+        autoVar:'',
+        typeOfInput:'',
+        loadingText:false,
+        editingText:false,
+        manoVar:{publisher:'',title:'',description:''},
+        // rules: [value => !value || value.size < 2000000 || 'Avatar size should be less than 2 MB!',
+        // ], for adding files directly
           //promises: [{title: 'Total Promises', promise:'20'}, {title: 'Promises Followed', promise: '0'}]
     }},
+    methods: {
+        deleteThis(i){
+            this.tempArray.splice(i,1)
+        },
+        addMano(){
+            this.tempArray.push(this.manoVar);
+            this.manoVar={publisher:'',title:'',description:''}
+        },
+        async callAutoBackend(autoVar){
+            try {
+                console.log(autoVar)
+                this.deedsData = await politicianService.getAutoVar(autoVar);
+                if(autoVar=='')
+                {
+                    this.autoVar="invalid url";
+                    this.loadingText = false;
+                } else
+                {
+                    this.tempArray.push(this.deedsData);
+                    this.autoVar='';
+                    this.loadingText = false;
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        
+    }
 }
 
 </script>

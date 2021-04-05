@@ -53,6 +53,26 @@ class politicianService {
         
         });
     }
+    static getAutoVar(autoVar){
+        //promise is short hand for calling a function
+        //then making sure na may reply siya kung success
+        //or fail
+        return new Promise((resolve,reject)=>{
+            try {
+                //in order to get the url from the database
+                console.log(autoVar)
+                axios.post(`${url}/deeds/`,{autoVar} ).then((res) => {
+                let data = res.data;
+                resolve(data);
+                console.log(data);   
+            });
+                
+            } catch (err) {
+                reject(err);
+            }
+        
+        });
+    }
 // create Post
 //post_user.js
 
