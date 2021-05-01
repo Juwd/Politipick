@@ -52,27 +52,31 @@
         <v-row>
           <p class="body-1"><span class="font-weight-bold">{{promise.subpolicy}} </span> <br> {{subpolicyDescription(promise.policy,promise.subpolicy)}} </p>  
         </v-row>
-        <v-row>
-          <h1> Opinions of {{politician.credentials.name}} </h1>
-        </v-row>
-        <v-row>
-          <v-textarea outlined v-model="promise.opinion" :rules="rules" placeholder="e.g. immigration is a concern we all shall look at"></v-textarea>
-        </v-row>
-        <v-row>
-          <h1> How {{politician.credentials.name}} support this policy </h1>
-        </v-row>
-        <v-row>
-          <v-textarea outlined v-model="promise.how" :rules="rules" placeholder="I can support X policy by enacting etc."></v-textarea>
-        </v-row>
-        <v-row>
-          <h1> Why {{politician.credentials.name}}  support this policy</h1>
-        </v-row>
-        <v-row>
-          <v-textarea outlined v-model="promise.why" :rules="rules" placeholder="I support X policy because"></v-textarea>
-        </v-row>
+        <div v-if="promise.policy && promise.subpolicy">
+          <v-row>
+            <h1> Opinions of {{politician.credentials.name}} </h1>
+          </v-row>
+          <v-row>
+            <v-textarea outlined v-model="promise.opinion" :rules="rules" placeholder="e.g. immigration is a concern we all shall look at"></v-textarea>
+          </v-row>
+          <v-row>
+            <h1> How {{politician.credentials.name}} support this policy </h1>
+          </v-row>
+          <v-row>
+            <v-textarea outlined v-model="promise.how" :rules="rules" placeholder="I can support X policy by enacting etc."></v-textarea>
+          </v-row>
+          <v-row>
+            <h1> Why {{politician.credentials.name}}  support this policy</h1>
+          </v-row>
+          <v-row>
+            <v-textarea outlined v-model="promise.why" :rules="rules" placeholder="I support X policy because"></v-textarea>
+          </v-row>
+        </div>
         <!-- </v-pagination> -->
         <p>{{promise.opinion}}</p>
-        <v-btn @click="addPromises()">Add promises</v-btn>
+        
+          <v-btn v-if="promise.how && promise.why && promise.opinion" @click="addPromises()">Add promises</v-btn>
+        
         <v-divider></v-divider>
         
       </div>
@@ -183,6 +187,16 @@ export default {
         how:"",
         citation:[{url:""}]
     })
+        // just add it next time, where there would be no duplicates
+    // for (var i=0; i < this.policies.length; i++) {
+    //     if (this.policies[i].title === this.promise.policy) {
+    //         for(var j=0; j < this.policies[i].subtopics.length;j++){
+    //           if(this.policies[i].subtopics[j].title === this.promise.subpolicy){
+    //             console.log(this.policies[i].subtopics[j].title)
+    //           }
+    //         }
+    //     }
+    // }
     },
     //  handlePageChange(value) {
     //   this.politician.promises.window = value;

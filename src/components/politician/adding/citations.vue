@@ -8,13 +8,14 @@
       <v-col><v-img :src="politician.image"></v-img></v-col>
       <v-col sm="2"><v-input :messages="['who is the photographer?']" prepend-icon="mdi-account-question">Position</v-input></v-col>
     </v-row> -->
+    <v-form ref="form">
     <v-row v-if="politician.status.position">
       <v-col sm="2"><v-input :messages="['Anung gawa niya ngayon?']" prepend-icon="mdi-account-question">Position</v-input></v-col>
        <v-col sm="2">{{politician.status.status}}</v-col>
       <v-col sm="2">{{politician.status.position}}</v-col>
       <!-- Currently iisa lang ang paglalagyan ng citation nung dalawa -->
       <v-col sm="6">
-      <span v-for="(cite,i) in politician.status.citation" :key="cite.index"><v-text-field v-model="cite.url" clearable append-outer-icon="mdi-plus" :append-icon="showIcon2?'mdi-minus':undefined"
+      <span v-for="(cite,i) in politician.status.citation" :key="cite.index"><v-text-field :rules="rules" v-model="cite.url" clearable append-outer-icon="mdi-plus" :append-icon="showIcon2?'mdi-minus':undefined"
                @click:append="removePosiCite(i)" @click:append-outer="addPosiCite()" class="mt-0 pt-0" label="Citation"></v-text-field>
       </span>
       </v-col>
@@ -26,7 +27,7 @@
       <v-col sm="2">{{politician.pastStatus.pastPosition}}</v-col>
     
       <v-col sm="6">
-      <span v-for="(cite,i) in politician.pastStatus.citation" :key="cite.index"><v-text-field v-model="cite.url" clearable append-outer-icon="mdi-plus" :append-icon="showIcon3?'mdi-minus':undefined"
+      <span v-for="(cite,i) in politician.pastStatus.citation" :key="cite.index"><v-text-field :rules="rules" v-model="cite.url" clearable append-outer-icon="mdi-plus" :append-icon="showIcon3?'mdi-minus':undefined"
                @click:append="removePastPosiCite(i)" @click:append-outer="addPastPosiCite()" class="mt-0 pt-0" label="Citation"></v-text-field>
       </span>
       </v-col>
@@ -37,7 +38,7 @@
        <v-col sm="4">{{politician.famousWords.famousWords}}</v-col>
     
       <v-col sm="6">
-      <span v-for="(cite,i) in politician.famousWords.citation" :key="cite.index"><v-text-field v-model="cite.url" clearable append-outer-icon="mdi-plus" :append-icon="showIcon4?'mdi-minus':undefined"
+      <span v-for="(cite,i) in politician.famousWords.citation" :key="cite.index"><v-text-field :rules="rules" v-model="cite.url" clearable append-outer-icon="mdi-plus" :append-icon="showIcon4?'mdi-minus':undefined"
                @click:append="removeWordsCite(i)" @click:append-outer="addWordsCite()" class="mt-0 pt-0" label="Citation"></v-text-field>
       </span>
       </v-col>
@@ -56,7 +57,7 @@
                 <p>{{school.level}} at {{school.description}}</p>
             </v-col>
           <v-col sm="6">
-              <span v-for="(cite,x) in school.citation" :key="cite.index"><v-text-field v-model="cite.url" clearable append-outer-icon="mdi-plus" :append-icon="showIcon1[i]?'mdi-minus':undefined"
+              <span v-for="(cite,x) in school.citation" :key="cite.index"><v-text-field :rules="rules" v-model="cite.url" clearable append-outer-icon="mdi-plus" :append-icon="showIcon1[i]?'mdi-minus':undefined"
                @click:append="removeEducCite(i,x)" @click:append-outer="addEducCite(i)" class="mt-0 pt-0" label="Citation"></v-text-field>
               </span>
           </v-col>
@@ -73,7 +74,7 @@
                 <p>{{certificate.description}} at {{certificate.place}}</p>
             </v-col>
           <v-col sm="6">
-              <span v-for="(cite,x) in certificate.citation" :key="cite.index"><v-text-field v-model="cite.url" clearable append-outer-icon="mdi-plus" :append-icon="showIcon5[i]?'mdi-minus':undefined"
+              <span v-for="(cite,x) in certificate.citation" :key="cite.index"><v-text-field :rules="rules" v-model="cite.url" clearable append-outer-icon="mdi-plus" :append-icon="showIcon5[i]?'mdi-minus':undefined"
                @click:append="removeCertificateCite(i,x)" @click:append-outer="addCertificateCite(i)" class="mt-0 pt-0" label="Citation"></v-text-field>
               </span>
           </v-col>
@@ -91,7 +92,7 @@
                 <p>{{plan.plans}} </p>
             </v-col>
           <v-col sm="6">
-              <span v-for="(cite,x) in plan.citation" :key="cite.index"><v-text-field v-model="cite.url" clearable append-outer-icon="mdi-plus" :append-icon="showIcon6[i]?'mdi-minus':undefined"
+              <span v-for="(cite,x) in plan.citation" :key="cite.index"><v-text-field :rules="rules" v-model="cite.url" clearable append-outer-icon="mdi-plus" :append-icon="showIcon6[i]?'mdi-minus':undefined"
                @click:append="removePlanCite(i,x)" @click:append-outer="addPlanCite(i)" class="mt-0 pt-0" label="Citation"></v-text-field>
               </span>
           </v-col>
@@ -108,7 +109,7 @@
                 <p>{{highlight.description}} at {{highlight.date}}</p>
             </v-col>
           <v-col sm="6">
-              <span v-for="(cite,x) in highlight.citation" :key="cite.index"><v-text-field v-model="cite.url" clearable append-outer-icon="mdi-plus" :append-icon="showIcon7[i]?'mdi-minus':undefined"
+              <span v-for="(cite,x) in highlight.citation" :key="cite.index"><v-text-field :rules="rules" v-model="cite.url" clearable append-outer-icon="mdi-plus" :append-icon="showIcon7[i]?'mdi-minus':undefined"
                @click:append="removeHighlightCite(i,x)" @click:append-outer="addHighlightCite(i)" class="mt-0 pt-0" label="Citation"></v-text-field>
               </span>
           </v-col>
@@ -120,7 +121,7 @@
        <v-col sm="4">{{politician.belief.belief}}</v-col>
     
       <v-col sm="6">
-      <span v-for="(cite,i) in politician.belief.citation" :key="cite.index"><v-text-field v-model="cite.url" clearable append-outer-icon="mdi-plus" :append-icon="showIcon8?'mdi-minus':undefined"
+      <span v-for="(cite,i) in politician.belief.citation" :key="cite.index"><v-text-field :rules="rules" v-model="cite.url" clearable append-outer-icon="mdi-plus" :append-icon="showIcon8?'mdi-minus':undefined"
                @click:append="removeBeliefCite(i)" @click:append-outer="addBeliefCite()" class="mt-0 pt-0" label="Citation"></v-text-field>
       </span>
       </v-col>
@@ -131,7 +132,7 @@
        <v-col sm="4">{{politician.job.job}}</v-col>
     
       <v-col sm="6">
-      <span v-for="(cite,i) in politician.job.citation" :key="cite.index"><v-text-field v-model="cite.url" clearable append-outer-icon="mdi-plus" :append-icon="showIcon9?'mdi-minus':undefined"
+      <span v-for="(cite,i) in politician.job.citation" :key="cite.index"><v-text-field :rules="rules" v-model="cite.url" clearable append-outer-icon="mdi-plus" :append-icon="showIcon9?'mdi-minus':undefined"
                @click:append="removeJobCite(i)" @click:append-outer="addJobCite()" class="mt-0 pt-0" label="Citation"></v-text-field>
       </span>
       </v-col>
@@ -147,18 +148,20 @@
                 <p>{{affiliation.description}} at {{affiliation.date}}</p>
             </v-col>
           <v-col sm="6">
-              <span v-for="(cite,x) in affiliation.citation" :key="cite.index"><v-text-field v-model="cite.url" clearable append-outer-icon="mdi-plus" :append-icon="showIcon10[i]?'mdi-minus':undefined"
+              <span v-for="(cite,x) in affiliation.citation" :key="cite.index"><v-text-field :rules="rules" v-model="cite.url" clearable append-outer-icon="mdi-plus" :append-icon="showIcon10[i]?'mdi-minus':undefined"
                @click:append="removeAffiliationCite(i,x)" @click:append-outer="addAffiliationCite(i)" class="mt-0 pt-0" label="Citation"></v-text-field>
               </span>
           </v-col>
       </v-row>
     </div>
+    
 
       <v-row>
         <v-col >
           <p>{{politician.affiliations}}</p>
         </v-col>
       </v-row>
+    </v-form>
   </v-container>
 </template>
 
@@ -196,6 +199,7 @@ export default {
       showIcon8:false,
       showIcon9:false,
       showIcon10:[],
+      
   }),
   created() {
       this.politician=this.politicians.credentials
@@ -376,6 +380,8 @@ export default {
             this.showIcon9=false
           }
     },
+    //politician = this.politicians.credentials
+    
   }
 }
 </script>

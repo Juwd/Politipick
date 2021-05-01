@@ -61,7 +61,25 @@ class politicianService {
             try {
                 //in order to get the url from the database
                 console.log(autoVar)
-                axios.post(`${url}/deeds/`,{autoVar} ).then((res) => {
+                axios.post(`${url}deeds/`,{autoVar} ).then((res) => {
+                let data = res.data;
+                resolve(data);
+                console.log(data);   
+            });
+                
+            } catch (err) {
+                reject(err)
+            }
+        
+        });
+    }
+    static uploadDp(file){
+        return new Promise((resolve,reject)=>{
+            try {
+                let formData = new FormData();
+                formData.append("file", file);
+                console.log(formData)
+                axios.post(`${url}dp/`,formData ).then((res) => {
                 let data = res.data;
                 resolve(data);
                 console.log(data);   
@@ -73,6 +91,40 @@ class politicianService {
         
         });
     }
+    static uploadThumbnail(file){
+        return new Promise((resolve,reject)=>{
+            try {
+                let formData = new FormData();
+                formData.append("file", file);
+                console.log(formData)
+                axios.post(`${url}newsThumbnail/`,formData ).then((res) => {
+                let data = res.data;
+                resolve(data);
+                console.log(data);   
+            });
+                
+            } catch (err) {
+                reject(err);
+            }
+        
+        });
+    }
+    static savePolitician(politician){
+        console.log(politician)
+       return new Promise((resolve,reject) => {
+        try {
+        axios.post(`${url}credentials/`,politician).then((res)=> {
+            let data =res.data;
+            resolve(data);
+            console.log(data);
+        })
+        //console.log(res.data)
+    } catch(err){
+        reject(err);
+        console.log(err);
+    }
+    });
+}
 // create Post
 //post_user.js
 

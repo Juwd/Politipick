@@ -16,13 +16,28 @@
         <v-col lg="6">
             <v-text-field v-model="lastName" :rules="rules" label="Last Name" @change="fullName"></v-text-field>
         </v-col>
-        <!-- Adding the avatar -->
-        <!-- <v-col lg="4">
-            <v-file-input v-model="politician.image" truncate-length="15" accept="image/png, image/jpeg, image/bmp"
-            prepend-icon="mdi-camera" placeholder="Upload Image of Politician here"></v-file-input>
-        </v-col> -->
+        <!-- Adding the avatar --> 
       </v-row>
-
+      <v-row>
+        <v-col lg="4">
+          <h4>Choose whether to upload the politician image or to paste the image url</h4>
+        </v-col>
+        <v-col  lg="4">
+          <v-btn @click="politician.image.fileType='Mano'" depressed>
+            Upload file
+          </v-btn>
+          <v-btn @click="politician.image.fileType='Auto'" depressed>
+            Paste image url
+          </v-btn>
+        </v-col>
+        <v-col v-if="politician.image.fileType=='Mano'" lg="4">
+            <v-file-input v-model="politician.image.src" truncate-length="15" accept="image/png, image/jpeg, image/bmp"
+            prepend-icon="mdi-camera" placeholder="Upload Image of Politician here"></v-file-input>
+        </v-col>
+        <v-col v-if="politician.image.fileType=='Auto'" lg="4">
+          <v-text-field v-model="politician.image.src" placeholder="https://lp-cms-production.imgix.net/features/2019/08/shutterstock_1127874026-32c12e090f4f.jpg?auto=format&fit=crop&sharp=10&vib=20&ixlib=react-8.6.4&w=850"></v-text-field>
+        </v-col>
+      </v-row>
       <!-- Position -->
       <v-row>
         <v-col md="3">
@@ -84,7 +99,7 @@
             <v-input :messages="['Anung focus niya?']" prepend-icon="mdi-google-analytics">Economic Plan</v-input> 
           </v-col>
           <v-col sm="10">
-              <v-textarea rows="1" v-model="tempPlans" placeholder="E.g. Boosting infrastructure by increasing taxes for the next 20 years... etc." @keyup.enter="addPlans" hide-details="auto"> </v-textarea>
+              <v-textarea rows="1" hint="Press enter to add a new plan" v-model="tempPlans" placeholder="E.g. Boosting infrastructure by increasing taxes for the next 20 years... etc." @keyup.enter="addPlans" hide-details="auto"> </v-textarea>
           </v-col>
       </v-row>
       <v-row>
@@ -151,7 +166,7 @@
             <v-combobox  v-model="affiliation.description" :items="credentials.parties" label="Select a party or add a new one"  clearable outlined></v-combobox>
           </v-col>
           <v-col sm="2">
-              <v-text-field v-model="affiliation.date" placeholder="E.g. March, 2020" :rules="rules" hide-details="auto" append-outer-icon="mdi-plus" :append-icon="showIcon4?'mdi-minus':undefined" @click:append="removeAffiliations(i)" @click:append-outer="addAffiliations"> </v-text-field>
+              <v-text-field v-model="affiliation.date" placeholder="e.g. 2020-2021" :rules="rules" hide-details="auto" append-outer-icon="mdi-plus" :append-icon="showIcon4?'mdi-minus':undefined" @click:append="removeAffiliations(i)" @click:append-outer="addAffiliations"> </v-text-field>
           </v-col>
       </v-row>
       </div>
@@ -166,12 +181,12 @@
             <v-text-field v-model="relative.person" placeholder="E.g. Juan dela cruz" :rules="rules" hide-details="auto"> </v-text-field>
           </v-col>
           <v-col sm="2">
-              <v-text-field v-model="relative.position" placeholder="E.g. March, 2020" :rules="rules" hide-details="auto" append-outer-icon="mdi-plus" :append-icon="showIcon5?'mdi-minus':undefined" @click:append="removeRelatives(i)" @click:append-outer="addRelatives"> </v-text-field>
+              <v-text-field v-model="relative.position" placeholder="e.g. 2020- ?" :rules="rules" hide-details="auto" append-outer-icon="mdi-plus" :append-icon="showIcon5?'mdi-minus':undefined" @click:append="removeRelatives(i)" @click:append-outer="addRelatives"> </v-text-field>
           </v-col>
       </v-row>
       </div>
   </v-form>
-  <p>{{politician.credentials}}</p>
+  <p>{{politician.image}}</p>
   </div>
 </template>
 
@@ -212,13 +227,14 @@ export default {
       beliefs:["Social Democracy", "Federalism", "Conservatism","Liberal Conservatism", "Christian Democracy", "Liberalism"], 
       parties:["PDP-Laban", "Nacionalista Party", "Nationalist People's Coalition", "Lakas-Christian Muslim Democrats", "Partido Liberal"], 
       schools:["University of the Philippines", "De La Salle University", "University of Sto. Tomas", "Ateneo de Manila University"]},
-      // Main data to be sent
-      politician:{},
+      //file upload
+      //currentFile:undefined,
       // politician:{credentials:{name:'' ,status:{status:'',citation:[{url:""}]},position:{position:'',citation:[{url:""}]},pastStatus:{pastStatus:'',pastPosition:'', citation:[{url:""}]},famousWords:{famousWords:"",citation:[{url:""}]}, schools:[{description:"",level:"",citation:[{url:""}]}], 
                   // certificates:[{description:"",place:"",citation:[{url:""}]}], plans:[], highlights:[{description:"", date:"",citation:[{url:""}]}], belief:{belief:"",citation:[{url:""}]}, 
                   // affiliations:[{description:"", date:"",citation:[{url:""}]}],job:{job:"",citation:[{url:""}]}, relatives:[{person:"",position:"",citation:[{url:""}]}], },}
   }),
   created (){
+    // Main data to be sent
     this.politician= this.politicians
   },
   methods: {
@@ -320,6 +336,7 @@ export default {
             this.showIcon5=false
           }
      },
+
   }
 }
 </script>

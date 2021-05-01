@@ -1,6 +1,6 @@
 <template>
 <div>
-    <h1>Deeds</h1>
+    <h1>Praises</h1>
         <!-- <div v-for="element in tempArray" :key="element.index">
         <v-row>
             <v-col> <p>{{element}} {{element.index}}</p></v-col>
@@ -64,7 +64,7 @@
                                             </v-col>
                                         </v-row>
                                     </v-list-item-content>
-                                    <!-- <v-file-input label="Insert image here" :rules="rules" placeholder="Select your preferred photo" accept="image/png, image/jpeg, image/bmp" v-model="deeds.image" filled prepend-icon="mdi-camera"></v-file-input> 
+                                    <!-- <v-file-input label="Insert image here" :rules="rules" placeholder="Select your preferred photo" accept="image/png, image/jpeg, image/bmp" v-model="praises.image" filled prepend-icon="mdi-camera"></v-file-input> 
                                     for adding files directly-->
                                     <v-btn :disabled="!valid" color="success" class="mr-4" @click="addMano();">Save</v-btn>
                                 </v-list-item-content>
@@ -84,45 +84,45 @@
                 <v-btn block @click="typeOfInput='auto';">Add automatically</v-btn>
             </v-col>
         </v-row>
-        <v-row v-for="(deeds,i) in tempArray" :key="deeds._id" wrap>
+        <v-row v-for="(praises,i) in tempArray" :key="praises._id" wrap>
             <v-col lg=12>
                 <v-card outlined>
                     <v-list-item three-line>
                         <div v-if="editingText">
                         <v-list-item-content> 
                             <div class="overline mb-4">
-                                Publisher: <v-text-field v-model="deeds.publisher"></v-text-field>
+                                Publisher: <v-text-field v-model="praises.publisher"></v-text-field>
                             </div>   
                             <v-list-item-title class="headline mb-1">
-                                Title: <v-text-field v-model="deeds.title"></v-text-field>
+                                Title: <v-text-field v-model="praises.title"></v-text-field>
                             </v-list-item-title>
                             
                             <v-list-item-content>
-                                Desciription: <v-text-field v-model="deeds.description"></v-text-field>
+                                Desciription: <v-text-field v-model="praises.description"></v-text-field>
                             </v-list-item-content>
                             <v-list-item-content>
-                                Image source: <v-text-field v-model="deeds.image"></v-text-field>
+                                Image source: <v-text-field v-model="praises.image"></v-text-field>
                                 <small>note: Can only accept src at the mean time. The database can't save images. Please right click "Copy image location" in the said image</small>
                             </v-list-item-content>
-                            <!-- <v-file-input label="Insert image here" :rules="rules" placeholder="Select your preferred photo" accept="image/png, image/jpeg, image/bmp" v-model="deeds.image" filled prepend-icon="mdi-camera"></v-file-input> 
+                            <!-- <v-file-input label="Insert image here" :rules="rules" placeholder="Select your preferred photo" accept="image/png, image/jpeg, image/bmp" v-model="praises.image" filled prepend-icon="mdi-camera"></v-file-input> 
                             for adding files directly-->
                         </v-list-item-content>
                         </div>
                         <div v-else>
                         <v-list-item-content> 
                             <div class="overline mb-4">
-                                {{deeds.publisher}}
+                                {{praises.publisher}}
                             </div>   
                             <v-list-item-title class="headline mb-1">
-                                {{deeds.title}}
+                                {{praises.title}}
                             </v-list-item-title>
                             
                             <v-list-item-content>
-                                {{deeds.description}}... <a :href="deeds.url">Read more</a>
+                                {{praises.description}}... <a :href="praises.url">Read more</a>
                             </v-list-item-content>
                             
                         </v-list-item-content>
-                        <v-list-item-avatar tile class="ma-3" size="125"><v-img :src="deeds.image"></v-img></v-list-item-avatar>
+                        <v-list-item-avatar tile class="ma-3" size="125"><v-img :src="praises.image"></v-img></v-list-item-avatar>
                         </div>
                     </v-list-item>
                      <v-card-actions>
@@ -146,14 +146,14 @@
 <script>
 import politicianService from '../../../service/politicianService'
 export default {
-    name:'deeds',
+    name:'praises',
     props : ['politicians'],
     data () { 
       return{
         tabs: null,
         details: this.politicians,
         tempArray:[],
-        deedsData:'',
+        praisesData:'',
         autoVar:'',
         typeOfInput:'',
         loadingText:false,
@@ -187,22 +187,22 @@ export default {
         async callAutoBackend(autoVar){
             try {
                 console.log(autoVar)
-                this.deedsData = await politicianService.getAutoVar(autoVar);
-                if(autoVar=='' || null || !this.deedsData)
+                this.praisesData = await politicianService.getAutoVar(autoVar);
+                if(autoVar=='' || null || !this.praisesData)
                 {
                     this.autoVar="invalid url";
                     this.loadingText = false;
                     console.log("here")
                 } else
                 {
-                   console.log(this.deedsData)
-                    this.tempArray.push(this.deedsData);
+                   console.log(this.praisesData)
+                    this.tempArray.push(this.praisesData);
                     this.autoVar='';
                     this.loadingText = false;
                 }
             } catch (error) {
                 console.log("this is error")
-                console.log(this.deedsData)
+                console.log(this.praisesData)
                 console.log(error)
             }
         }
