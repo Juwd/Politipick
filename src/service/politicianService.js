@@ -3,8 +3,9 @@ import axios from 'axios'
 //therefore make seperate services for each data that is needed to return
 //One for the users, one for the posts
 
-const url ='https://politipick.herokuapp.com/api/politicians/' 
+const url ='https://politipick.herokuapp.com/api/politicians/'
 //|| 'http://localhost:5000/api/politicians/';
+//'https://politipick.herokuapp.com/api/politicians/' 
 //(process.env.url_name +
 
 class politicianService {
