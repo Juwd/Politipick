@@ -82,7 +82,7 @@
       </div>
     <!-- </v-card>  -->
     </v-container>
-      <p>{{politician.promises}}</p>
+      <!-- <p>{{politician.promises}}</p> -->
   </div>
 </template>
 

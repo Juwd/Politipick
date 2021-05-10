@@ -156,11 +156,11 @@
     </div>
     
 
-      <v-row>
+      <!-- <v-row>
         <v-col >
           <p>{{politician.affiliations}}</p>
         </v-col>
-      </v-row>
+      </v-row> -->
     </v-form>
   </v-container>
 </template>
