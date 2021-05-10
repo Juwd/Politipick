@@ -186,7 +186,7 @@
       </v-row>
       </div>
   </v-form>
-  <p>{{politician.image}}</p>
+  <!-- <p>{{politician.image}}</p> -->
   </div>
 </template>
 
